@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <inttypes.h>
 #include <string.h>
 #include "gerador.h"
 
@@ -31,12 +32,12 @@ void gerar_senha(uint64_t indice, char *saida, int tamanho) {
     int p = (int)(indice % n_prefixos);
     int s = (int)((indice / n_prefixos) % n_sufixos);
     uint64_t num = indice / (n_prefixos * n_sufixos);
-    snprintf(saida, tamanho, "vazada_%s%lu%s", prefixos[p], num, sufixos[s]);
+    snprintf(saida, tamanho, "vazada_%s%" PRIu64 "%s", prefixos[p], num, sufixos[s]);
 }
 
 void gerar_senha_segura(uint64_t indice, char *saida, int tamanho) {
     int p = (int)(indice % n_prefixos);
     int s = (int)((indice / n_prefixos) % n_sufixos);
     uint64_t num = indice / (n_prefixos * n_sufixos);
-    snprintf(saida, tamanho, "segura_%s%lu%s", prefixos[p], num, sufixos[s]);
+    snprintf(saida, tamanho, "segura_%s%" PRIu64 "%s", prefixos[p], num, sufixos[s]);
 }

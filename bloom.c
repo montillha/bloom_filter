@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include <inttypes.h>
 #include "bloom.h"
 
 // ============================================================
@@ -122,6 +123,6 @@ void bf_info(BloomFilter *bf) {
     printf("  Tamanho em bytes     : %u (%.4f MB)\n", bytes, (double)bytes / 1024.0 / 1024.0);
     printf("  Funcoes hash (k)     : %u\n", bf->k);
     printf("  Falso positivo alvo  : %.2f%%\n", bf->falso_pos * 100.0);
-    printf("  Elementos inseridos  : %lu\n", bf->inseridos);
+    printf("  Elementos inseridos  : %" PRIu64 "\n", bf->inseridos);
     printf("  Falso positivo real  : %.6f%%\n", bf_taxa_real(bf) * 100.0);
 }

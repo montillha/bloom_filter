@@ -1,5 +1,6 @@
 #define _POSIX_C_SOURCE 199309L
 #include <stdio.h>
+#include <inttypes.h>
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
@@ -32,7 +33,7 @@ static void fase_insercao(BloomFilter *bf, Resultado *res) {
 
         // Progresso a cada 250 mil insercoes
         if ((i + 1) % 250000 == 0)
-            printf("    %lu/%d inseridas...\n", i + 1, N_SENHAS_VAZADAS);
+            printf("    %" PRIu64 "/%d inseridas...\n", i + 1, N_SENHAS_VAZADAS);
     }
 
     res->tempo_insercao = medicao_finalizar(inicio, N_SENHAS_VAZADAS);
@@ -49,7 +50,7 @@ static void fase_consultas(BloomFilter *bf, Resultado *res) {
     char senha[TAM_SENHA];
     uint64_t metade = N_TESTES / 2;
 
-    printf("[2/3] Realizando %d consultas (%lu vazadas + %lu seguras)...\n",
+    printf("[2/3] Realizando %d consultas (%" PRIu64 " vazadas + %" PRIu64 " seguras)...\n",
            N_TESTES, metade, metade);
 
     res->total_testados      = N_TESTES;

@@ -1,5 +1,6 @@
 #define _POSIX_C_SOURCE 199309L
 #include <stdio.h>
+#include <inttypes.h>
 #include <time.h>
 #include "medicao.h"
 
@@ -46,33 +47,33 @@ void resultado_exibir(Resultado *r) {
     printf("  Equivalente em Hash Table      : %.2f MB\n",
            (double)r->total_testados * 20.0 / 1024.0 / 1024.0);
 
-    printf("\n--- Precisao (%lu consultas) ---\n", r->total_testados);
+    printf("\n--- Precisao (%" PRIu64 " consultas) ---\n", r->total_testados);
 
     uint64_t total_vazadas = r->verdadeiro_positivo + r->falso_negativo;
     uint64_t total_seguras = r->verdadeiro_negativo + r->falso_positivo;
 
-    printf("  Senhas vazadas testadas        : %lu\n", total_vazadas);
-    printf("  Senhas seguras testadas        : %lu\n", total_seguras);
+    printf("  Senhas vazadas testadas        : %" PRIu64 "\n", total_vazadas);
+    printf("  Senhas seguras testadas        : %" PRIu64 "\n", total_seguras);
 
-    printf("\n  Verdadeiro Positivo  (vazada detectada) : %lu  (%.2f%%)\n",
+    printf("\n  Verdadeiro Positivo  (vazada detectada) : %" PRIu64 "  (%.2f%%)\n",
            r->verdadeiro_positivo,
            total_vazadas > 0
            ? (double)r->verdadeiro_positivo / (double)total_vazadas * 100.0
            : 0.0);
 
-    printf("  Verdadeiro Negativo  (segura aprovada)  : %lu  (%.2f%%)\n",
+    printf("  Verdadeiro Negativo  (segura aprovada)  : %" PRIu64 "  (%.2f%%)\n",
            r->verdadeiro_negativo,
            total_seguras > 0
            ? (double)r->verdadeiro_negativo / (double)total_seguras * 100.0
            : 0.0);
 
-    printf("  Falso Positivo       (segura bloqueada) : %lu  (%.4f%%)  <- aceitavel\n",
+    printf("  Falso Positivo       (segura bloqueada) : %" PRIu64 "  (%.4f%%)  <- aceitavel\n",
            r->falso_positivo,
            total_seguras > 0
            ? (double)r->falso_positivo / (double)total_seguras * 100.0
            : 0.0);
 
-    printf("  Falso Negativo       (vazada aprovada)  : %lu  (%.4f%%)  <- deve ser 0\n",
+    printf("  Falso Negativo       (vazada aprovada)  : %" PRIu64 "  (%.4f%%)  <- deve ser 0\n",
            r->falso_negativo,
            total_vazadas > 0
            ? (double)r->falso_negativo / (double)total_vazadas * 100.0
@@ -82,7 +83,7 @@ void resultado_exibir(Resultado *r) {
     if (r->falso_negativo == 0)
         printf("  [OK] ZERO falsos negativos: nenhuma senha vazada passou.\n");
     else
-        printf("  [!!] ATENCAO: %lu senhas vazadas passaram pelo filtro!\n",
+        printf("  [!!] ATENCAO: %" PRIu64 " senhas vazadas passaram pelo filtro!\n",
                r->falso_negativo);
 
     double taxa_fp = total_seguras > 0
